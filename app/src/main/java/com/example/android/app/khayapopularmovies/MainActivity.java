@@ -1,12 +1,17 @@
 package com.example.android.app.khayapopularmovies;
 
-import android.support.v7.app.AlertController;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int NUM_LIST_ITEMS = 100;
+
+    private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
 
     @Override
@@ -15,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
+
+        GridLayoutManager gridLayout = new GridLayoutManager(this, 2);
+        mMovieList.setLayoutManager(gridLayout);
+
+        mMovieList.setHasFixedSize(true);
+
+        mAdapter = new MovieAdapter(NUM_LIST_ITEMS);
+
+        mMovieList.setAdapter(mAdapter);
     }
 
 
