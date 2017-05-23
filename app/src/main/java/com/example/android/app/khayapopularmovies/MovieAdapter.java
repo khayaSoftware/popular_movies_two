@@ -30,13 +30,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder{
 
-        TextView gridMovieItem;
+
         ImageView gridMovieImage;
 
         public MovieViewHolder(View itemView){
             super(itemView);
 
-            gridMovieItem = (TextView) itemView.findViewById(R.id.tv_item_movie);
             gridMovieImage = (ImageView) itemView.findViewById(R.id.movie_image);
 
         }
@@ -58,9 +57,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.gridMovieItem.setText(""+position);
+
         try{
-            Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(holder.gridMovieImage);
+            Picasso.with(context).load("http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg ").into(holder.gridMovieImage);
         }catch (Exception e){
             Log.d(TAG, "error");
             e.printStackTrace();

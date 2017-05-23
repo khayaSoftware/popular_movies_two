@@ -5,19 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/tv_item_movie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="monospace"
-        android:textSize="42sp"
-        tools:text="#42"
-        android:textColor="#000"/>
+        android:id="@+id/tv_url"/>
 
     <ImageView
         android:id="@+id/movie_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:background="#eee"/>
 </GridLayout>
