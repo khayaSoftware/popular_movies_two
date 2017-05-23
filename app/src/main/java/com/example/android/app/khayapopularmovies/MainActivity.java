@@ -6,10 +6,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NUM_LIST_ITEMS = 100;
+    private static final int NUM_LIST_ITEMS = 3;
 
     private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
@@ -21,14 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
 
-        GridLayoutManager gridLayout = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayout = new GridLayoutManager(this, 3);
         mMovieList.setLayoutManager(gridLayout);
 
         mMovieList.setHasFixedSize(true);
 
-        mAdapter = new MovieAdapter(NUM_LIST_ITEMS);
+        mAdapter = new MovieAdapter(NUM_LIST_ITEMS,this);
 
         mMovieList.setAdapter(mAdapter);
+
+
+
     }
 
 
