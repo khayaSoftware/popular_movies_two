@@ -21,33 +21,44 @@ import static java.security.AccessController.getContext;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 
+    public final MovieAdapterOnClickHandler mClickHandler;
     private ArrayList<Movie> mMovies;
     static final String TAG = MovieAdapter.class.getSimpleName();
     private int mMoviesItems;
     private  Context context;
-    public MovieAdapter(int numberOfMovies, Context context){
 
-        mMoviesItems = numberOfMovies;
+    public MovieAdapter(MovieAdapterOnClickHandler clickHandler, Context context){
+        this.mClickHandler = clickHandler;
+        mMoviesItems = getItemCount();
         this.context = context;
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+    public interface MovieAdapterOnClickHandler{
+        void onClick(Movie movie);
+    }
 
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            int adapterPostition = getAdapterPosition();
+            Movie movie = mMovies.get(adapterPostition);
+            mClickHandler.onClick(movie);
+        }
 
         ImageView gridMovieImage;
 
         public MovieViewHolder(View itemView){
             super(itemView);
-
             gridMovieImage = (ImageView) itemView.findViewById(R.id.movie_image);
-
+            itemView.setOnClickListener(this);
         }
 
     }
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //context = parent.getContext();
+
         int layoutForListItem = R.layout.movie_grid_items;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmedietly = false;
@@ -58,12 +69,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieViewHolder;
     }
 
+
+
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
+
         String imagePath = "http://image.tmdb.org/t/p/w185/" + mMovies.get(position).posterPath;
-        Log.v(TAG, "Image url - " + imagePath);
+
         try{
-            Log.v(TAG, "Image url - " + imagePath);
             Picasso.with(context).load(imagePath).into(holder.gridMovieImage);
         }catch (Exception e){
             Log.d(TAG, "error");
