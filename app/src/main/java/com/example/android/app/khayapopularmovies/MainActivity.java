@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>>{
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
         protected ArrayList<Movie> doInBackground(String... params) {
             if(params.length == 0){
                 return null;
@@ -75,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {
             if(movies != null){
-                for(Movie movie : movies){
-
-                }
+                mAdapter.setMovieData(movies);
             }
         }
     }

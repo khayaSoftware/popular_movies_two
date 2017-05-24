@@ -1,6 +1,7 @@
 package com.example.android.app.khayapopularmovies;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
  */
 
 public class OpenMovieJsonUtils{
+    private final static String TAG = OpenMovieJsonUtils.class.getSimpleName();
+
     public static ArrayList getSimpleMovieStrings(Context context, String movieJsonStr)throws JSONException{
 
         ArrayList movies = new ArrayList();
@@ -32,7 +35,7 @@ public class OpenMovieJsonUtils{
                     movieArray.getJSONObject(i).getString("vote_count"),
                     movieArray.getJSONObject(i).getString("vote_average")
             );
-
+            Log.d(TAG, movie.posterPath);
             movies.add(movie);
         }
         return movies;

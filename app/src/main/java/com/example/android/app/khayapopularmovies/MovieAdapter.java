@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import static java.security.AccessController.getContext;
 
 /**
@@ -19,7 +21,8 @@ import static java.security.AccessController.getContext;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 
-    private static final String TAG = MovieAdapter.class.getSimpleName();
+    private ArrayList<Movie> mMovies;
+    static final String TAG = MovieAdapter.class.getSimpleName();
     private int mMoviesItems;
     private  Context context;
     public MovieAdapter(int numberOfMovies, Context context){
@@ -57,11 +60,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-
+        String imagePath = "http://image.tmdb.org/t/p/w185/" + mMovies.get(position).posterPath;
+        Log.v(TAG, "Image url - " + imagePath);
         try{
-            Picasso.with(context).load("http://image.tmdb.org/t/p/w342//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg ").into(holder.gridMovieImage);
+            Log.v(TAG, "Image url - " + imagePath);
+            Picasso.with(context).load(imagePath).into(holder.gridMovieImage);
         }catch (Exception e){
             Log.d(TAG, "error");
+            Log.v(TAG, "Image url - " + imagePath);
             e.printStackTrace();
         }
 
@@ -69,8 +75,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return mMoviesItems;
+        if(null == mMovies)return 0;
+        return mMovies.size();
     }
 
-
+    public void setMovieData(ArrayList<Movie> movies){
+        mMovies = movies;
+        notifyDataSetChanged();
+    }
 }
