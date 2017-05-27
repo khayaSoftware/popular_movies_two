@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Bundle extras = new Bundle();
         extras.putString("EXTRA_URL",movie.posterPath);
         extras.putString("EXTRA_DESCRIPTION",movie.overview);
+        extras.putString("EXTRA_TITLE", movie.title);
+        extras.putString("EXTRA_RELEASE_DATE",movie.releaseDate);
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
     }
