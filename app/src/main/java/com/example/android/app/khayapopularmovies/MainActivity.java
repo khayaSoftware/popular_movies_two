@@ -4,14 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +30,7 @@ import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -29,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
     ArrayList movieList;
+    private final String TOP_RATED = "top_rated";
+    private final String POPULAR = "popular";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
-
-        textView = (TextView) findViewById(R.id.tv_url);
 
         GridLayoutManager gridLayout = new GridLayoutManager(this, 3);
         mMovieList.setLayoutManager(gridLayout);
@@ -49,10 +62,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mMovieList.setAdapter(mAdapter);
 
-        new FetchMoviesTask().execute("top_rated");
-
+        new FetchMoviesTask().execute(POPULAR);
 
     }
+
 
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>>{
 
@@ -100,5 +113,29 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString("EXTRA_RELEASE_DATE",movie.releaseDate);
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.popular:
+                mAdapter.setMovieData(null);
+                new FetchMoviesTask().execute(POPULAR);
+                return true;
+
+            case R.id.top_rated:
+                mAdapter.setMovieData(null);
+                new FetchMoviesTask().execute(TOP_RATED);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

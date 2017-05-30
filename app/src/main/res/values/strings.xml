@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Khaya Popular Movies</string>
+    <string name="app_name">KLIX</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
 </resources>

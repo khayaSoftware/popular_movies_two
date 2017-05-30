@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <TextView
-        android:id="@+id/tv_url"/>
-
     <ImageView
         android:id="@+id/movie_image"
         android:layout_width="fill_parent"
