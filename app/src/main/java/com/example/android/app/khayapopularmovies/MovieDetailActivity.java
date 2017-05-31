@@ -37,7 +37,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             textViewStatus.setText(extras.getString("EXTRA_RELEASE_DATE"));
             textViewDescription.setText(extras.getString("EXTRA_DESCRIPTION"));
             textViewTitle.setText(extras.getString("EXTRA_TITLE"));
-            String imagePath = "http://image.tmdb.org/t/p/w342/" + extras.getString("EXTRA_URL");
+            String imagePath = "http://image.tmdb.org/t/p/w780/" + extras.getString("EXTRA_URL");
             Log.d(TAG, "image url " + imagePath);
             try {
                 Picasso.with(this).load(imagePath).into(imageView);

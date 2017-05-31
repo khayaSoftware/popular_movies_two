@@ -28,8 +28,8 @@ public class OpenMovieJsonUtils{
             Movie movie = new Movie(
                     movieArray.getJSONObject(i).getString("poster_path"),
                     movieArray.getJSONObject(i).getString("overview"),
-                    movieArray.getJSONObject(i).getString("id"),
                     movieArray.getJSONObject(i).getString("release_date"),
+                    movieArray.getJSONObject(i).getString("id"),
                     movieArray.getJSONObject(i).getString("title"),
                     movieArray.getJSONObject(i).getString("backdrop_path"),
                     movieArray.getJSONObject(i).getString("vote_count"),

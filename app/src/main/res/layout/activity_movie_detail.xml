@@ -10,34 +10,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:columnCount="2"
-            android:rowCount="1"
+            android:background="@drawable/gradient"
             android:padding="0dp"
-            android:layout_margin="0sp"
-            android:background="#EEBC10">
+            android:layout_margin="0sp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
                     android:id="@+id/movie_poster"/>
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:gravity="left"
-                    android:paddingLeft="10sp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_stats"
-                    android:textColor="#000"
-                    android:background="#EEBC10"
-                    />
 
-        </GridLayout>
+
+        </LinearLayout>
 
 
             <LinearLayout
@@ -56,10 +45,21 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/tv_title"
                     android:gravity="left"
-                    android:padding="2dp"
                     android:textColor="#fff"
-                    android:layout_marginTop="220dp"/>
-
+                    android:layout_marginTop="150dp"
+                    android:background="@drawable/gradient"
+                    android:paddingLeft="10sp"/>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:gravity="left"
+                    android:paddingLeft="10sp"
+                    android:textSize="14sp"
+                    android:id="@+id/tv_stats"
+                    android:textColor="#EEBC10"
+                    android:background="@drawable/gradient"
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:textSize="23sp"
@@ -67,7 +67,8 @@
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/tv_description"
                     android:gravity="left"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:paddingLeft="10sp"/>
 
             </LinearLayout>
 
