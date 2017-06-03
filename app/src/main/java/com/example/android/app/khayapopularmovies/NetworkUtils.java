@@ -19,13 +19,9 @@ public class NetworkUtils {
 
     private static final String  baseUrl = "http://api.themoviedb.org/3/movie/";
 
-    private static final String popularMovies = "popular";
-
-    private static final String topRated = "top_rated";
-
     private static final String API_QUERY = "api_key";
 
-    private static final String API_KEY = "7a5254ae6cc2bfff088c47da1358dfb1";
+    private static final String API_KEY = BuildConfig.MY_MOVIEDB_API_KEY;
 
     public static URL buildUrl(String sortBy){
         Uri builtUri = Uri.parse(baseUrl).buildUpon()

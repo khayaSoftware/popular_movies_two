@@ -5,7 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEBC10"
     tools:context="com.example.android.app.khayapopularmovies.MainActivity">
+
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#000"
+        android:id="@+id/progress"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/error"
+        android:text="@string/error_msg"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_movies"

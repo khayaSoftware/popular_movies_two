@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,14 +37,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
 
     private String url;
-    private static final int NUM_LIST_ITEMS = 100;
     private TextView textView;
     private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
     ArrayList movieList;
     private final String TOP_RATED = "top_rated";
     private final String POPULAR = "popular";
-
+    private ProgressBar mLoadingIndicatore;
+    private TextView mErrorMessageDisplay;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mLoadingIndicatore = (ProgressBar) findViewById(R.id.progress);
+
+        mErrorMessageDisplay = (TextView) findViewById(R.id.error);
+
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
 
         GridLayoutManager gridLayout = new GridLayoutManager(this, 3);
+
         mMovieList.setLayoutManager(gridLayout);
 
         mMovieList.setHasFixedSize(true);
@@ -62,16 +69,34 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mMovieList.setAdapter(mAdapter);
 
-        new FetchMoviesTask().execute(POPULAR);
+        loadMovieData();
 
     }
 
+    private void loadMovieData() {
+        showMovieDataView();
+
+        new FetchMoviesTask().execute(POPULAR);
+    }
+
+    private void showMovieDataView() {
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+
+        mMovieList.setVisibility(View.VISIBLE);
+    }
+
+    private void showErrorMessage() {
+        mMovieList.setVisibility(View.INVISIBLE);
+
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
 
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>>{
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mLoadingIndicatore.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -95,8 +120,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {
+            mLoadingIndicatore.setVisibility(View.INVISIBLE);
             if(movies != null){
+                showMovieDataView();
                 mAdapter.setMovieData(movies);
+            }else {
+                showErrorMessage();
             }
         }
     }
@@ -111,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString("EXTRA_DESCRIPTION",movie.overview);
         extras.putString("EXTRA_TITLE", movie.title);
         extras.putString("EXTRA_RELEASE_DATE", movie.releaseDate.substring(0,4));
+        extras.putString("EXTRA_VOTE_AVERAGE", movie.voteAcerage);
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);

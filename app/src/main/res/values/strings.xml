@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">KLIX</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="error_msg">Network Error</string>
+    <string name="rating">  | RATING:  </string>
+    <string name="top_rate">/10</string>
 </resources>

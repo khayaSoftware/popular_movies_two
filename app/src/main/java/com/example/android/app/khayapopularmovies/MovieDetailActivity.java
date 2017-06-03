@@ -33,23 +33,23 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent intentThatStarted = getIntent();
 
         if(intentThatStarted != null){
+
             Bundle extras = getIntent().getExtras();
-            textViewStatus.setText(extras.getString("EXTRA_RELEASE_DATE"));
+            textViewStatus.setText(extras.getString("EXTRA_RELEASE_DATE") +" "+ getString(R.string.rating) +" "+ extras.getString("EXTRA_VOTE_AVERAGE") + getString(R.string.top_rate));
             textViewDescription.setText(extras.getString("EXTRA_DESCRIPTION"));
             textViewTitle.setText(extras.getString("EXTRA_TITLE"));
             String imagePath = "http://image.tmdb.org/t/p/w780/" + extras.getString("EXTRA_URL");
             Log.d(TAG, "image url " + imagePath);
+
             try {
                 Picasso.with(this).load(imagePath).into(imageView);
             } catch (Exception e) {
-                Log.d(TAG, "error");
+                e.printStackTrace();
                 Log.v(TAG, "Image url - " + imagePath);
                 e.printStackTrace();
                 }
         }
-        else{
-            textViewDescription.setText("shit");
-        }
+
     }
 
 }
