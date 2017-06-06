@@ -79,8 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         try{
             Picasso.with(context).load(imagePath).into(holder.gridMovieImage);
         }catch (Exception e){
-            Log.d(TAG, "error");
-            Log.v(TAG, "Image url - " + imagePath);
+
             e.printStackTrace();
         }
 

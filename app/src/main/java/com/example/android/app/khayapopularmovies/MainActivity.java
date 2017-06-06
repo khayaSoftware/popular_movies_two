@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessageDisplay;
     private RecyclerView mRecyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString("EXTRA_DESCRIPTION",movie.overview);
         extras.putString("EXTRA_TITLE", movie.title);
         extras.putString("EXTRA_RELEASE_DATE", movie.releaseDate.substring(0,4));
-        extras.putString("EXTRA_VOTE_AVERAGE", movie.voteAcerage);
+        extras.putString("EXTRA_VOTE_AVERAGE", movie.voteAverage);
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);

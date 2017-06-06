@@ -15,8 +15,6 @@ import java.util.Scanner;
  */
 
 public class NetworkUtils {
-    private static final String TAG = NetworkUtils.class.getSimpleName();
-
     private static final String  baseUrl = "http://api.themoviedb.org/3/movie/";
 
     private static final String API_QUERY = "api_key";
@@ -35,8 +33,6 @@ public class NetworkUtils {
         }catch (MalformedURLException e){
             e.printStackTrace();
         }
-
-        Log.v(TAG, "Built URI - " + url);
 
         return url;
     }

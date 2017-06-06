@@ -9,9 +9,9 @@
     tools:context="com.example.android.app.khayapopularmovies.MainActivity">
 
     <ProgressBar
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="#000"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:id="@+id/progress"/>
 
     <TextView
