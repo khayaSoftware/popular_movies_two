@@ -9,4 +9,5 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"/>
+    <!-- TODO SUGGESTION Consider contentDescription attribute for Accessibility -->
 </GridLayout>

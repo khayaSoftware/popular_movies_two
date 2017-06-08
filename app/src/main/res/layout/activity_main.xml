@@ -13,6 +13,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:id="@+id/progress"/>
+    <!-- TODO SUGGESTION Put sizes in dimens.xml -->
 
     <TextView
         android:layout_width="match_parent"
@@ -22,6 +23,7 @@
         android:textSize="20dp"
         android:gravity="center"
         android:layout_gravity="center"/>
+    <!-- TODO SUGGESTION It is advised to use SP instead of DP for text size (as discussed in class) -->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_movies"

@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
 
         GridLayoutManager gridLayout = new GridLayoutManager(this, 3);
+        //TODO EXCELLENT You're using a GridLayoutManager to display the thumbnails
 
         mMovieList.setLayoutManager(gridLayout);
 
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>>{
-
+    //TODO SUGGESTION Use AsyncTaskLoader, it is more efficient than AsyncTask as discussed in class
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             URL movieRequest = NetworkUtils.buildUrl(params[0]);
             try{
                 url = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                // TODO SUGGESTION Use meaningful & unambiguous identifier names.
+                // TODO SUGGESTION 'url' is a very misleading identifier name, the string 'url' actually contains JSON data
                 ArrayList movies = OpenMovieJsonUtils.getSimpleMovieStrings(MainActivity.this, url);
                 movieList = movies;
                 return movies;
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 e.printStackTrace();
                 return null;
             }
-
+            //TODO AWESOME You're doing all the heavy lifting on a background thread, leaving the UI thread free => UX++
         }
 
         @Override
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString("EXTRA_TITLE", movie.title);
         extras.putString("EXTRA_RELEASE_DATE", movie.releaseDate.substring(0,4));
         extras.putString("EXTRA_VOTE_AVERAGE", movie.voteAverage);
+        //TODO REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone.
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch (id){
             case R.id.popular:
                 mAdapter.setMovieData(null);
-                new FetchMoviesTask().execute(POPULAR);
+                new FetchMoviesTask().execute(POPULAR); //TODO EXCELLENT Good use of String constants here
                 return true;
 
             case R.id.top_rated:

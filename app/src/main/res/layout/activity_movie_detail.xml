@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     android:id="@+id/movie_poster"/>
-
+<!-- TODO SUGGESTION When network connectivity is lost your app doesn't display the poster - consider a default image in that case -->
 
 
         </LinearLayout>

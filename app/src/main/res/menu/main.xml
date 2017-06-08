@@ -11,6 +11,7 @@
             <item
                 android:id="@+id/top_rated"
                 android:title="Top Rated Movies" />
+            <!-- //TODO REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
         </menu>
     </item>
 </menu>

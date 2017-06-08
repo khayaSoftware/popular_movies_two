@@ -16,10 +16,12 @@ import java.util.Scanner;
 
 public class NetworkUtils {
     private static final String  baseUrl = "http://api.themoviedb.org/3/movie/";
+    //TODO SUGGESTION Follow the standard Java Naming Conventions i.e. BASE_URL in this instance
 
     private static final String API_QUERY = "api_key";
 
     private static final String API_KEY = BuildConfig.MY_MOVIEDB_API_KEY;
+    //TODO AWESOME You're keeping your API key out of source code!
 
     public static URL buildUrl(String sortBy){
         Uri builtUri = Uri.parse(baseUrl).buildUpon()
