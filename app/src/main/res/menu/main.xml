@@ -12,6 +12,7 @@
                 android:id="@+id/top_rated"
                 android:title="@string/label_top_rated_movies" />
             <!-- //COMPLETED  REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
+            <!-- TODO-2 REQUIREMENT String literals include the string literal above "sort"  -->
         </menu>
     </item>
 </menu>
