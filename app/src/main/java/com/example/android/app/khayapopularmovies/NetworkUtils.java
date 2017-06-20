@@ -24,7 +24,7 @@ public class NetworkUtils {
     //TODO AWESOME You're keeping your API key out of source code!
 
     public static URL buildUrl(String sortBy){
-        Uri builtUri = Uri.parse(baseUrl).buildUpon()
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(sortBy)
                 .appendQueryParameter(API_QUERY, API_KEY)
                 .build();
