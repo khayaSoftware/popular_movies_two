@@ -13,4 +13,5 @@
     <string name="top_rate">/10</string>
     <string name="top_rated">top_rated</string>
     <string name="popular">popular</string>
+    <string name="label_sort">sort</string>
 </resources>
