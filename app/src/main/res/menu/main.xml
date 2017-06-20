@@ -7,11 +7,11 @@
         <menu>
             <item
                 android:id="@+id/popular"
-                android:title="Popular Movies" />
+                android:title="@string/label_popular_movies" />
             <item
                 android:id="@+id/top_rated"
-                android:title="Top Rated Movies" />
-            <!-- //TODO REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
+                android:title="@string/label_top_rated_movies" />
+            <!-- //COMPLETED  REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
         </menu>
     </item>
 </menu>

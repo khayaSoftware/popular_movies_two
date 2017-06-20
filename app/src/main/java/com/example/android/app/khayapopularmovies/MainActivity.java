@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Class destination = MovieDetailActivity.class;
         Intent intentToStartAct = new Intent(context, destination);
         Bundle extras = new Bundle();
-        extras.putString("EXTRA_URL",movie.backdropPath);
-        extras.putString("EXTRA_DESCRIPTION",movie.overview);
-        extras.putString("EXTRA_TITLE", movie.title);
-        extras.putString("EXTRA_RELEASE_DATE", movie.releaseDate.substring(0,4));
-        extras.putString("EXTRA_VOTE_AVERAGE", movie.voteAverage);
-        //TODO REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone.
+        extras.putString(getString(R.string.bundle_url),movie.backdropPath);
+        extras.putString(getString(R.string.bundle_description),movie.overview);
+        extras.putString(getString(R.string.bundle_title), movie.title);
+        extras.putString(getString(R.string.bundle_release_date), movie.releaseDate.substring(0,4));
+        extras.putString(getString(R.string.bundle_vote_average), movie.voteAverage);
+        //COMPLETED REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone.
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);

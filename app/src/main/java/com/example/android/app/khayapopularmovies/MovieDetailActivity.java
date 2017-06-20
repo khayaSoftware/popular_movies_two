@@ -35,10 +35,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         if(intentThatStarted != null){
 
             Bundle extras = getIntent().getExtras();
-            textViewStatus.setText(extras.getString("EXTRA_RELEASE_DATE") +" "+ getString(R.string.rating) +" "+ extras.getString("EXTRA_VOTE_AVERAGE") + getString(R.string.top_rate));
-            textViewDescription.setText(extras.getString("EXTRA_DESCRIPTION"));
-            textViewTitle.setText(extras.getString("EXTRA_TITLE"));
-            String imagePath = "http://image.tmdb.org/t/p/w780/" + extras.getString("EXTRA_URL");
+            textViewStatus.setText(extras.getString(getString(R.string.bundle_release_date)) +" "+ getString(R.string.rating) +" "+ extras.getString(getString(R.string.bundle_vote_average)) + getString(R.string.top_rate));
+            textViewDescription.setText(extras.getString(getString(R.string.bundle_description)));
+            textViewTitle.setText(extras.getString(getString(R.string.bundle_title)));
+            String imagePath = "http://image.tmdb.org/t/p/w780/" + extras.getString(getString(R.string.bundle_url));
 
             try {
                 Picasso.with(this).load(imagePath).into(imageView);

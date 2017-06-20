@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 
 public class NetworkUtils {
-    private static final String  baseUrl = "http://api.themoviedb.org/3/movie/";
+    private static final String  BASE_URL = "http://api.themoviedb.org/3/movie/";
     //TODO SUGGESTION Follow the standard Java Naming Conventions i.e. BASE_URL in this instance
 
     private static final String API_QUERY = "api_key";

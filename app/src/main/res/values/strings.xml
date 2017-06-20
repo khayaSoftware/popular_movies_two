@@ -3,5 +3,14 @@
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
     <string name="error_msg">Network Error</string>
     <string name="rating">  | RATING:  </string>
+    <string name="bundle_url">EXTRA_URL</string>
+    <string name="bundle_description">EXTRA_DESCRIPTION</string>
+    <string name="bundle_title">EXTRA_TITLE</string>
+    <string name="bundle_release_date">EXTRA_RELEASE_DATE</string>
+    <string name="bundle_vote_average">EXTRA_VOTE_AVERAGE</string>
+    <string name="label_popular_movies">Popular Movies</string>
+    <string name="label_top_rated_movies">Top Rated Movies</string>
     <string name="top_rate">/10</string>
+    <string name="top_rated">top_rated</string>
+    <string name="popular">popular</string>
 </resources>
