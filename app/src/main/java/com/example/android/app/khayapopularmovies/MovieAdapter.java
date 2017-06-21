@@ -25,6 +25,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public final MovieAdapterOnClickHandler mClickHandler;
     private ArrayList<Movie> mMovies;
     static final String TAG = MovieAdapter.class.getSimpleName();
+    static final String PARTIAL_IMAGE_LINK = "http://image.tmdb.org/t/p/w185/";
     private int mMoviesItems;
     private  Context context;
 
@@ -75,7 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
-        String imagePath = "http://image.tmdb.org/t/p/w185/" + mMovies.get(position).posterPath;
+        String imagePath = PARTIAL_IMAGE_LINK + mMovies.get(position).posterPath;
 
         try{
             Picasso.with(context).load(imagePath).into(holder.gridMovieImage);

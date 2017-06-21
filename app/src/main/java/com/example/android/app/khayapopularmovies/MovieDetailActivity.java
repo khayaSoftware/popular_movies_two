@@ -19,6 +19,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView textViewDescription;
     private TextView textViewStatus;
     private TextView textViewTitle;
+    static final String PARTIAL_IMAGE_LINK = "http://image.tmdb.org/t/p/w780/";
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
 
     @Override
@@ -38,7 +39,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             textViewStatus.setText(extras.getString(getString(R.string.bundle_release_date)) +" "+ getString(R.string.rating) +" "+ extras.getString(getString(R.string.bundle_vote_average)) + getString(R.string.top_rate));
             textViewDescription.setText(extras.getString(getString(R.string.bundle_description)));
             textViewTitle.setText(extras.getString(getString(R.string.bundle_title)));
-            String imagePath = "http://image.tmdb.org/t/p/w780/" + extras.getString(getString(R.string.bundle_url));
+            String imagePath = PARTIAL_IMAGE_LINK + extras.getString(getString(R.string.bundle_url));
 
             try {
                 Picasso.with(this).load(imagePath).into(imageView);

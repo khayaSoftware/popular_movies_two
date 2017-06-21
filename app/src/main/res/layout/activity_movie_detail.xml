@@ -48,7 +48,7 @@
                     android:textColor="#fff"
                     android:layout_marginTop="150dp"
                     android:background="@drawable/gradient"
-                    android:paddingLeft="10sp"/>
+                    android:paddingLeft="10dp"/>
                 <!-- TODO-2 SUGGESTION Use sp only for text, use dp for other sizes - also move them to dimens.xml -->
                 <!-- TODO-2 SUGGESTION Accessibility - throughout your xml: use 'start' and 'end' instead of 'left' and 'right' - to support RTL languages -->
                 <TextView
