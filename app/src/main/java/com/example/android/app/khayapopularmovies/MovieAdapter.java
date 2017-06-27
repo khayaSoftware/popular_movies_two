@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import static java.security.AccessController.getContext;
 
 /**
- * Created by User on 5/16/2017.
+ * Created by Khaya on 5/16/2017.
  */
-//TODO-2 SUGGESTION Be careful of templates, it could appear as though the work was not yours.
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 

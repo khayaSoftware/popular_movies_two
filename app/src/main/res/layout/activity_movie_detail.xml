@@ -23,56 +23,63 @@
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     android:id="@+id/movie_poster"/>
-<!-- TODO SUGGESTION When network connectivity is lost your app doesn't display the poster - consider a default image in that case -->
 
 
         </LinearLayout>
 
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/gradient"
+            android:padding="0dp"
+            android:layout_margin="0dp">
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:textSize="30sp"
+                android:layout_margin="-20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tv_title"
+                android:gravity="start"
+                android:textColor="#fff"
+                android:layout_marginTop="150dp"
                 android:background="@drawable/gradient"
-                android:padding="0dp"
-                android:layout_margin="0sp">
+                android:paddingLeft="10dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="start"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:id="@+id/tv_stats"
+                android:textColor="#EEBC10"
+                android:background="@drawable/gradient"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="23sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tv_description"
+                android:gravity="start"
+                android:textColor="#fff"
+                android:paddingLeft="10sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textSize="30sp"
-                    android:layout_margin="-20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/tv_title"
-                    android:gravity="left"
-                    android:textColor="#fff"
-                    android:layout_marginTop="150dp"
-                    android:background="@drawable/gradient"
-                    android:paddingLeft="10dp"/>
-                <!-- TODO-2 SUGGESTION Use sp only for text, use dp for other sizes - also move them to dimens.xml -->
-                <!-- TODO-2 SUGGESTION Accessibility - throughout your xml: use 'start' and 'end' instead of 'left' and 'right' - to support RTL languages -->
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:gravity="left"
-                    android:paddingLeft="10sp"
-                    android:textSize="14sp"
-                    android:id="@+id/tv_stats"
-                    android:textColor="#EEBC10"
-                    android:background="@drawable/gradient"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textSize="23sp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/tv_description"
-                    android:gravity="left"
-                    android:textColor="#fff"
-                    android:paddingLeft="10sp"/>
+        </LinearLayout>
 
-            </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_favorite_white_24dp"
+            android:layout_gravity="end"
+            android:tint="#EEBC10"/>
 
     </FrameLayout>
 </ScrollView>

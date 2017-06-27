@@ -14,4 +14,6 @@
     <string name="top_rated">top_rated</string>
     <string name="popular">popular</string>
     <string name="piccassa">http://image.tmdb.org/t/p/w185/</string>
+    <string name="menu_item_key">MenuItemKey</string>
+    <string name="content_description">Movie Poster</string>
 </resources>

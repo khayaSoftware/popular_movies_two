@@ -2,41 +2,29 @@ package com.example.android.app.khayapopularmovies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
-import android.support.v4.view.MenuItemCompat;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
 
 
-    private String url;
+    private String jsonData;
     private TextView textView;
     private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
@@ -46,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private ProgressBar mLoadingIndicatore;
     private TextView mErrorMessageDisplay;
     private RecyclerView mRecyclerView;
+    private static final int LOADER_ID = 22;
 
 
     @Override
@@ -59,9 +48,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay = (TextView) findViewById(R.id.error);
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
-
-        GridLayoutManager gridLayout = new GridLayoutManager(this, 3);
-        //TODO EXCELLENT You're using a GridLayoutManager to display the thumbnails
+        GridLayoutManager gridLayout;
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            gridLayout = new GridLayoutManager(this, 3);
+    }
+        else {
+            gridLayout = new GridLayoutManager(this, 2);
+        }
 
         mMovieList.setLayoutManager(gridLayout);
 
@@ -75,11 +68,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     }
 
+
+
     private void loadMovieData() {
         showMovieDataView();
 
-        new FetchMoviesTask().execute(POPULAR);
+        loadMovieData(POPULAR);
     }
+
+
 
     private void showMovieDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
@@ -93,45 +90,74 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>>{
-    //TODO SUGGESTION Use AsyncTaskLoader, it is more efficient than AsyncTask as discussed in class
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingIndicatore.setVisibility(View.VISIBLE);
+    private void loadMovieData(String selectedMenuItem){
+        
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.menu_item_key), selectedMenuItem);
+
+        LoaderManager lm = getSupportLoaderManager();
+        android.support.v4.content.Loader<Movie[]> movieLoader = lm.getLoader(LOADER_ID);
+
+        if (movieLoader == null){
+            lm.initLoader(LOADER_ID,bundle,this);
+        }else{
+            lm.restartLoader(LOADER_ID,bundle,this);
         }
 
-        @Override
-        protected ArrayList<Movie> doInBackground(String... params) {
-            if(params.length == 0){
-                return null;
+    }
+
+    @Override
+    public Loader<ArrayList<Movie>> onCreateLoader(int id, final Bundle args) {
+
+        return new AsyncTaskLoader<ArrayList<Movie>>(this) {
+
+            @Override
+            protected void onStartLoading() {
+
+                if (args == null) {
+                    return;
+                }
+
+                mLoadingIndicatore.setVisibility(View.VISIBLE);
+                forceLoad();
             }
 
-            URL movieRequest = NetworkUtils.buildUrl(params[0]);
-            try{
-                url = NetworkUtils.getResponseFromHttpUrl(movieRequest);
-                // TODO SUGGESTION Use meaningful & unambiguous identifier names.
-                // TODO SUGGESTION 'url' is a very misleading identifier name, the string 'url' actually contains JSON data
-                ArrayList movies = OpenMovieJsonUtils.getSimpleMovieStrings(MainActivity.this, url);
-                movieList = movies;
-                return movies;
-            }catch (Exception e){
-                e.printStackTrace();
-                return null;
-            }
-            //TODO AWESOME You're doing all the heavy lifting on a background thread, leaving the UI thread free => UX++
-        }
+            @Override
+            public ArrayList<Movie> loadInBackground() {
 
-        @Override
-        protected void onPostExecute(ArrayList<Movie> movies) {
-            mLoadingIndicatore.setVisibility(View.INVISIBLE);
-            if(movies != null){
-                showMovieDataView();
-                mAdapter.setMovieData(movies);
-            }else {
-                showErrorMessage();
+
+                URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)));
+                try {
+                    jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                    ArrayList movies = OpenMovieJsonUtils.getSimpleMovieStrings(MainActivity.this, jsonData);
+                    movieList = movies;
+                    return movies;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
+
+
+        };
+
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> movies) {
+        mLoadingIndicatore.setVisibility(View.INVISIBLE);
+        if (movies != null) {
+            showMovieDataView();
+            mAdapter.setMovieData(movies);
+        } else {
+            showErrorMessage();
         }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
+        //Do nothing
     }
 
     @Override
@@ -145,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString(getString(R.string.bundle_title), movie.title);
         extras.putString(getString(R.string.bundle_release_date), movie.releaseDate.substring(0,4));
         extras.putString(getString(R.string.bundle_vote_average), movie.voteAverage);
-        //COMPLETED REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone.
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
@@ -164,12 +189,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch (id){
             case R.id.popular:
                 mAdapter.setMovieData(null);
-                new FetchMoviesTask().execute(POPULAR); //TODO EXCELLENT Good use of String constants here
+                loadMovieData(POPULAR);
                 return true;
 
             case R.id.top_rated:
                 mAdapter.setMovieData(null);
-                new FetchMoviesTask().execute(TOP_RATED);
+                loadMovieData(TOP_RATED);
                 return true;
         }
         return super.onOptionsItemSelected(item);
