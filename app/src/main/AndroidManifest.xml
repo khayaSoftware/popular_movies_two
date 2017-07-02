@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.example.android.app.khayapopularmovies">
+    package="com.example.android.app.khayapopularmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- COMPLETED SUGGESTION Consider the layout of your code so it is more readable - eases maintenance, helps reduce errors -->
 
-    <application  android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme"
-        android:background="@drawable/gradient_down">
+    <application
+        android:allowBackup="true"
+        android:background="@drawable/gradient_down"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_radio_button_checked_black_24dp"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -18,10 +23,19 @@ package="com.example.android.app.khayapopularmovies">
             </intent-filter>
         </activity>
 
-        <activity android:name=".MovieDetailActivity" android:parentActivityName=".MainActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
+        <activity
+            android:name=".MovieDetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
             <!-- COMPLETED SUGGESTION Perhaps with better formatting this typo might have been caught 'neta-data' :^)  -->
         </activity>
+
+        <provider
+            android:name="com.example.android.app.khayapopularmovies.data.FavoriteContentProvider"
+            android:authorities="com.example.android.app.khayapopularmovies"
+            android:exported="false" />
 
     </application>
 

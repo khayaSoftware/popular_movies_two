@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-        <item
-            android:id="@+id/popular"
-            android:title="@string/label_popular_movies"
-            app:showAsAction="never"/>
-        <item
-            android:id="@+id/top_rated"
-            android:title="@string/label_top_rated_movies"
-            app:showAsAction="never"/>
-        <!-- //COMPLETED  REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
-        <!-- COMPLETED-2 REQUIREMENT String literals include the string literal above "sort"  -->
+    <item
+        android:id="@+id/popular"
+        android:title="@string/label_popular_movies"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/top_rated"
+        android:title="@string/label_top_rated_movies"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/favourites"
+        android:title="@string/favourite_label"
+        app:showAsAction="never" />
+    <!-- //COMPLETED  REQUIRED String literals should be in strings.xml or defined as constants; improves localisation & maintenance, less error prone. -->
+    <!-- COMPLETED-2 REQUIREMENT String literals include the string literal above "sort"  -->
 </menu>

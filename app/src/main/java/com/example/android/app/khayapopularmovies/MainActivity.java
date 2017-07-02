@@ -3,6 +3,7 @@ package com.example.android.app.khayapopularmovies;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -11,6 +12,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +20,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.app.khayapopularmovies.data.ContractFavoriteMovie;
+
 import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<ArrayList<Movie>> {
-
 
     private String jsonData;
     private TextView textView;
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessageDisplay;
     private RecyclerView mRecyclerView;
     private static final int LOADER_ID = 22;
-
+    private Cursor mCursor;
+    private final static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
         GridLayoutManager gridLayout;
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridLayout = new GridLayoutManager(this, 3);
-    }
-        else {
+        } else {
             gridLayout = new GridLayoutManager(this, 2);
         }
 
@@ -69,13 +72,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
 
-
     private void loadMovieData() {
         showMovieDataView();
 
         loadMovieData(POPULAR);
     }
-
 
 
     private void showMovieDataView() {
@@ -90,18 +91,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    private void loadMovieData(String selectedMenuItem){
-        
+    private void loadMovieData(String selectedMenuItem) {
+
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.menu_item_key), selectedMenuItem);
 
         LoaderManager lm = getSupportLoaderManager();
         android.support.v4.content.Loader<Movie[]> movieLoader = lm.getLoader(LOADER_ID);
 
-        if (movieLoader == null){
-            lm.initLoader(LOADER_ID,bundle,this);
-        }else{
-            lm.restartLoader(LOADER_ID,bundle,this);
+        if (movieLoader == null) {
+            lm.initLoader(LOADER_ID, bundle, this);
+        } else {
+            lm.restartLoader(LOADER_ID, bundle, this);
         }
 
     }
@@ -166,11 +167,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Class destination = MovieDetailActivity.class;
         Intent intentToStartAct = new Intent(context, destination);
         Bundle extras = new Bundle();
-        extras.putString(getString(R.string.bundle_url),movie.backdropPath);
-        extras.putString(getString(R.string.bundle_description),movie.overview);
+        extras.putString(getString(R.string.bundle_url), movie.backdropPath);
+        extras.putString(getString(R.string.bundle_description), movie.overview);
         extras.putString(getString(R.string.bundle_title), movie.title);
-        extras.putString(getString(R.string.bundle_release_date), movie.releaseDate.substring(0,4));
+        extras.putString(getString(R.string.bundle_release_date), movie.releaseDate.substring(0, 4));
         extras.putString(getString(R.string.bundle_vote_average), movie.voteAverage);
+        extras.putString(getString(R.string.bundle_poster_url), movie.posterPath);
+        extras.putString(getString(R.string.bundle_vote_count), movie.voteCount);
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.popular:
                 mAdapter.setMovieData(null);
                 loadMovieData(POPULAR);
@@ -196,7 +199,39 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 mAdapter.setMovieData(null);
                 loadMovieData(TOP_RATED);
                 return true;
+
+            case R.id.favourites:
+                mAdapter.setMovieData(null);
+                loadFavouriteMovies();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public Cursor returnFavourites() {
+        Log.e(TAG, "failed to async load data " + ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI);
+        return getContentResolver().query(ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    private void loadFavouriteMovies(){
+        Cursor cursor = returnFavourites();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Movie favouriteMovie = new Movie(
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry._ID)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_COUNT)),
+                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_AVERAGE))
+            );
+            movieList.add(favouriteMovie);
+        }
     }
 }

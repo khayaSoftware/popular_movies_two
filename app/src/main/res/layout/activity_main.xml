@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,26 +8,25 @@
     tools:context="com.example.android.app.khayapopularmovies.MainActivity">
 
     <ProgressBar
+        android:id="@+id/progress"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:id="@+id/progress"/>
+        android:layout_gravity="center" />
     <!-- TODO SUGGESTION Put sizes in dimens.xml -->
 
     <TextView
+        android:id="@+id/error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/error"
-        android:text="@string/error_msg"
-        android:textSize="20dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:text="@string/error_msg"
+        android:textSize="20dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EEBC10">
-    </android.support.v7.widget.RecyclerView>
+        android:background="#EEBC10"></android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

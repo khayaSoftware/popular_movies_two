@@ -9,7 +9,7 @@ public class Movie {
     public Movie(String posterPath, String overview,
                  String releaseDate, String id,
                  String title, String backdropPath,
-                 String voteCount, String voteAverage ){
+                 String voteCount, String voteAverage) {
         this.posterPath = posterPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
@@ -19,6 +19,7 @@ public class Movie {
         this.voteCount = voteCount;
         this.voteAverage = voteAverage;
     }
+
     public String posterPath;
     public String overview;
     public String releaseDate;

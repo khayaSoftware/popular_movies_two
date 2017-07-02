@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by noybs on 23/05/2017.
  */
 
-public class OpenMovieJsonUtils{
+public class OpenMovieJsonUtils {
     private final static String TAG = OpenMovieJsonUtils.class.getSimpleName();
     private final static String POSTER_PATH = "poster_path";
     private final static String OVERVIEW = "overview";
@@ -24,7 +24,8 @@ public class OpenMovieJsonUtils{
     private final static String VOTE_COUNT = "vote_count";
     private final static String VOTE_AVE = "vote_average";
     private final static String RESULTS = "results";
-    public static ArrayList getSimpleMovieStrings(Context context, String movieJsonStr)throws JSONException{
+
+    public static ArrayList getSimpleMovieStrings(Context context, String movieJsonStr) throws JSONException {
 
         ArrayList movies = new ArrayList();
 
@@ -32,7 +33,7 @@ public class OpenMovieJsonUtils{
 
         JSONArray movieArray = movieJson.getJSONArray(RESULTS);
 
-        for(int i = 0; i < movieArray.length(); ++i){
+        for (int i = 0; i < movieArray.length(); ++i) {
             Movie movie = new Movie(
                     movieArray.getJSONObject(i).getString(POSTER_PATH),
                     movieArray.getJSONObject(i).getString(OVERVIEW),
