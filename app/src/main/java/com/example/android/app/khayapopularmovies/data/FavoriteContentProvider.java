@@ -88,7 +88,7 @@ public class FavoriteContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        returnCursor.setNotificationUri(getContext().getContentResolver(), null);
+        returnCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return returnCursor;
     }
@@ -120,7 +120,16 @@ public class FavoriteContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        final SQLiteDatabase db = mFavoriteDbHelper.getWritableDatabase();
+
+        int ifUpdated = db.update(ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME, null, null, null);
+
+        if (ifUpdated != 0){
+            return ifUpdated;
+        }else {
+            return 0;
+        }
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Nullable

@@ -31,7 +31,8 @@ public class HelperFavoriteMovie extends SQLiteOpenHelper {
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_COUNT + " TEXT NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL + " TEXT NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL + " TEXT NOT NULL," +
-                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL" +
+                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL," +
+                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_IS_FAVORITE + " INT NOT NULL" +
                 "); ";
 
         sqLiteDatabase.execSQL(SQL_CREATE_FAVORITE_TABLE);
@@ -42,6 +43,10 @@ public class HelperFavoriteMovie extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
+    }
+
+    public static void deleteDatabase(Context mContext) {
+        mContext.deleteDatabase(DATABASE_NAME);
     }
 }
 

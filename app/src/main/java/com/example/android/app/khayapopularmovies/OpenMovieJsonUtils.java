@@ -24,6 +24,8 @@ public class OpenMovieJsonUtils {
     private final static String VOTE_COUNT = "vote_count";
     private final static String VOTE_AVE = "vote_average";
     private final static String RESULTS = "results";
+    private final static String CONTENT = "content";
+    private final static String AUTHOR = "author";
 
     public static ArrayList getSimpleMovieStrings(Context context, String movieJsonStr) throws JSONException {
 
@@ -48,6 +50,22 @@ public class OpenMovieJsonUtils {
             movies.add(movie);
         }
         return movies;
+    }
+
+    public static ArrayList<String> getSimpleReviewStrings(Context context, String movieJsonStr) throws JSONException {
+
+        ArrayList<String> reviews = new ArrayList<String>();
+
+        JSONObject movieJson = new JSONObject(movieJsonStr);
+
+        JSONArray movieArray = movieJson.getJSONArray(RESULTS);
+
+        for (int i = 0; i < movieArray.length(); ++i) {
+            String review = movieArray.getJSONObject(i).getString(AUTHOR) + "\n" + movieArray.getJSONObject(i).getString(CONTENT);
+            Log.d(TAG, "review = " + review);
+            reviews.add(review);
+        }
+        return reviews;
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -19,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.app.khayapopularmovies.data.ContractFavoriteMovie;
+import com.example.android.app.khayapopularmovies.data.HelperFavoriteMovie;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     ArrayList movieList;
     private final String TOP_RATED = "top_rated";
     private final String POPULAR = "popular";
+    private final String FAVOURITE = "Favourites";
     private ProgressBar mLoadingIndicatore;
     private TextView mErrorMessageDisplay;
     private RecyclerView mRecyclerView;
@@ -48,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         setContentView(R.layout.activity_main);
 
         mLoadingIndicatore = (ProgressBar) findViewById(R.id.progress);
-
+        //For deleting database BE CAREFUL!!
+        //HelperFavoriteMovie.deleteDatabase(this);
         mErrorMessageDisplay = (TextView) findViewById(R.id.error);
 
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         bundle.putString(getString(R.string.menu_item_key), selectedMenuItem);
 
         LoaderManager lm = getSupportLoaderManager();
-        android.support.v4.content.Loader<Movie[]> movieLoader = lm.getLoader(LOADER_ID);
+        android.support.v4.content.Loader<ArrayList<Movie>> movieLoader = lm.getLoader(LOADER_ID);
 
         if (movieLoader == null) {
             lm.initLoader(LOADER_ID, bundle, this);
@@ -126,19 +131,25 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             @Override
             public ArrayList<Movie> loadInBackground() {
 
-
-                URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)));
-                try {
-                    jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
-                    ArrayList movies = OpenMovieJsonUtils.getSimpleMovieStrings(MainActivity.this, jsonData);
-                    movieList = movies;
-                    return movies;
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(args.getString(getString(R.string.menu_item_key)).equals(POPULAR) || args.getString(getString(R.string.menu_item_key)).equals(TOP_RATED)){
+                    URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)));
+                    try {
+                        jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                        ArrayList movies = OpenMovieJsonUtils.getSimpleMovieStrings(MainActivity.this, jsonData);
+                        movieList = movies;
+                        return movies;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }else if(args.getString(getString(R.string.menu_item_key)).equals(FAVOURITE)){
+                        movieList = loadFavouriteMovies();
+                        return movieList;
+                }else {
                     return null;
-                }
-            }
+                 }
 
+            }
 
         };
 
@@ -174,6 +185,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         extras.putString(getString(R.string.bundle_vote_average), movie.voteAverage);
         extras.putString(getString(R.string.bundle_poster_url), movie.posterPath);
         extras.putString(getString(R.string.bundle_vote_count), movie.voteCount);
+        extras.putString(getString(R.string.bundle_id), movie.id);
+        extras.putInt(getString(R.string.bundle_is_fav), movie.isFavourite);
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
@@ -202,36 +215,64 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             case R.id.favourites:
                 mAdapter.setMovieData(null);
-                loadFavouriteMovies();
+                loadMovieData(FAVOURITE);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public Cursor returnFavourites() {
-        Log.e(TAG, "failed to async load data " + ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI);
+        Log.d(TAG, "uri = " + ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI);
         return getContentResolver().query(ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI,
                 null,
                 null,
                 null,
                 null);
+
     }
 
-    private void loadFavouriteMovies(){
+    private ArrayList<Movie> loadFavouriteMovies(){
+    //private void loadFavouriteMovies(){
+        Log.d(TAG, "uri 2 = " + ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI);
         Cursor cursor = returnFavourites();
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            Movie favouriteMovie = new Movie(
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry._ID)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_COUNT)),
-                    cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_AVERAGE))
-            );
-            movieList.add(favouriteMovie);
+        cursor.move(0);
+
+
+        ArrayList<Movie> favoriteMovies = new ArrayList<Movie>();
+        try{
+            while (cursor.moveToNext()) {
+                String movieName = cursor.getString(cursor.getColumnIndex("title"));
+                Log.d(TAG, "Movie = "+ movieName);
+                String movieDescription = cursor.getString(cursor.getColumnIndex("sypnosis"));
+                String movieRelease = cursor.getString(cursor.getColumnIndex("release"));
+                String movieID = cursor.getString(cursor.getColumnIndex("_id")).toString();
+                String movieBackdrop = cursor.getString(cursor.getColumnIndex("backdrop"));
+                String moviePoster = cursor.getString(cursor.getColumnIndex("poster"));
+                String movieVoteAverage = cursor.getString(cursor.getColumnIndex("vote_average"));
+                String movieVoteCount = cursor.getString(cursor.getColumnIndex("vote_count"));
+
+                Movie favouriteMovie = new Movie(
+                        moviePoster,
+                        movieDescription,
+                        movieRelease,
+                        movieID,
+                        movieName,
+                        movieBackdrop,
+                        movieVoteCount,
+                        movieVoteAverage
+                );
+
+                favouriteMovie.setFavourite(1);
+                favoriteMovies.add(favouriteMovie);
+                //Toast.makeText(this, movieName, Toast.LENGTH_LONG).show();
+            }
+        }finally {
+            cursor.close();
         }
+
+        return favoriteMovies;
+        //HelperFavoriteMovie.deleteDatabase(this);
+        //Toast.makeText(this, updated, Toast.LENGTH_LONG).show();
     }
 }

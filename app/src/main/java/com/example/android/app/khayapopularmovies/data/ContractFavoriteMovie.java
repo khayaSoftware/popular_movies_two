@@ -28,6 +28,7 @@ public class ContractFavoriteMovie {
         public static final String COLUMN_BACKDROP_URL = "backdrop";
         public static final String COLUMN_POSTER_URL = "poster";
         public static final String COLUMN_RELEASE_DATE = "release";
+        public static final String COLUMN_IS_FAVORITE = "is_fav";
 
     }
 }

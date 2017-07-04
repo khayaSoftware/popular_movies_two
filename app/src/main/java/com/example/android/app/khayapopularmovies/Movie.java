@@ -20,6 +20,7 @@ public class Movie {
         this.voteAverage = voteAverage;
     }
 
+    public int isFavourite = 0;
     public String posterPath;
     public String overview;
     public String releaseDate;
@@ -28,4 +29,12 @@ public class Movie {
     public String backdropPath;
     public String voteCount;
     public String voteAverage;
+
+    public int isFavourite(){
+        return isFavourite;
+    }
+
+    public void setFavourite(int value){
+        isFavourite = value;
+    }
 }

@@ -70,7 +70,21 @@
                 android:textColor="#fff"
                 android:textSize="23sp" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEBC10"></android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
+
+        <!--<android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_trailers"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#EEBC10"></android.support.v7.widget.RecyclerView>-->
+
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
