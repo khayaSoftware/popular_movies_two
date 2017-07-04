@@ -128,7 +128,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         mReviewList.setHasFixedSize(true);
         mReviewList.setAdapter(mReviewAdapter);
         //String query = extras.getString(getString(R.string.bundle_id)) + "3593/reviews";
-        loadMovieData("3593/reviews");
+        loadMovieData(extras.getString(getString(R.string.bundle_id)),"reviews");
 
     }
 
@@ -144,10 +144,11 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         //mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    private void loadMovieData(String selectedMenuItem) {
+    private void loadMovieData(String movieID, String sort) {
 
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.menu_item_key), selectedMenuItem);
+        bundle.putString(getString(R.string.menu_item_key), sort);
+        bundle.putString(getString(R.string.movie_id_key), movieID);
 
         LoaderManager lm = getSupportLoaderManager();
         android.support.v4.content.Loader<ArrayList<String>> movieLoader = lm.getLoader(LOADER_ID);
@@ -178,9 +179,10 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
             @Override
             public ArrayList<String> loadInBackground() {
-                URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)));
+                URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)), args.getString(getString(R.string.movie_id_key)));
                 try {
                     jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                    Log.d(TAG, "Json data = "+ jsonData);
                     ArrayList reviews = OpenMovieJsonUtils.getSimpleReviewStrings(MovieDetailActivity.this, jsonData);
                     reviewList = reviews;
                     return reviews;

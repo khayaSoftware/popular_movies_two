@@ -5,5 +5,15 @@
     <TextView
         android:id="@+id/tv_review"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"/>
 </LinearLayout>

@@ -20,6 +20,7 @@
     <string name="popular">popular</string>
     <string name="piccassa">http://image.tmdb.org/t/p/w185/</string>
     <string name="menu_item_key">MenuItemKey</string>
+    <string name="movie_id_key">MovieIdKey</string>
     <string name="content_description">Movie Poster</string>
     <string name="save_message">is saved as a favourite.</string>
     <string name="delete_message">has been deleted from favourites.</string>

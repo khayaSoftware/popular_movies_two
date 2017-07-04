@@ -66,15 +66,34 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="start"
-                android:paddingLeft="10sp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
                 android:textColor="#fff"
                 android:textSize="23sp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:background="#EEBC10"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/gradient_down"
+                android:gravity="start"
+                android:paddingLeft="10dp"
+                android:text="Reviews"
+                android:paddingBottom="10dp"
+                android:textColor="#fff"
+                android:textSize="30sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EEBC10"></android.support.v7.widget.RecyclerView>
+
 
         </LinearLayout>
 
@@ -83,7 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="#EEBC10"></android.support.v7.widget.RecyclerView>-->
-
 
 
         <android.support.design.widget.FloatingActionButton

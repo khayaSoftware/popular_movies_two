@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
     private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private static final String TAG = NetworkUtils.class.getSimpleName();
     //COMPLETED SUGGESTION Follow the standard Java Naming Conventions i.e. BASE_URL in this instance
 
     private static final String API_QUERY = "api_key";
@@ -34,7 +35,24 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        Log.d(TAG,"url = " + url.toString());
+        return url;
+    }
 
+    public static URL buildUrl(String sortBy, String movieid) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(movieid)
+                .appendPath(sortBy)
+                .appendQueryParameter(API_QUERY, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG,"url = " + url.toString());
         return url;
     }
 
