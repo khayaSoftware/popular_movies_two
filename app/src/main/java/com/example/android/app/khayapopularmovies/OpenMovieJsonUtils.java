@@ -26,6 +26,9 @@ public class OpenMovieJsonUtils {
     private final static String RESULTS = "results";
     private final static String CONTENT = "content";
     private final static String AUTHOR = "author";
+    private final static String KEY = "key";
+    private final static String YOUTUBE = "youtube";
+    private final static String SOURCE = "source";
 
     public static ArrayList getSimpleMovieStrings(Context context, String movieJsonStr) throws JSONException {
 
@@ -63,6 +66,22 @@ public class OpenMovieJsonUtils {
         for (int i = 0; i < movieArray.length(); ++i) {
             String review = movieArray.getJSONObject(i).getString(AUTHOR) + "\n" + movieArray.getJSONObject(i).getString(CONTENT);
             Log.d(TAG, "review = " + review);
+            reviews.add(review);
+        }
+        return reviews;
+    }
+
+    public static ArrayList<String> getSimpleTrailerStrings(Context context, String movieJsonStr) throws JSONException {
+
+        ArrayList<String> reviews = new ArrayList<String>();
+
+        JSONObject movieJson = new JSONObject(movieJsonStr);
+
+        JSONArray movieArray = movieJson.getJSONArray(YOUTUBE);
+
+        for (int i = 0; i < movieArray.length(); ++i) {
+            String review = movieArray.getJSONObject(i).getString(SOURCE);
+            Log.d(TAG, "Trailer = " + review);
             reviews.add(review);
         }
         return reviews;

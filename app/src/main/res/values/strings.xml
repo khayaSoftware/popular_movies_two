@@ -27,4 +27,5 @@
     <string name="action_type">Action</string>
     <string name="favourite_label">Favourites</string>
     <string name="new_line">\n</string>
+    <string name="trailer_tv_lable">Trailer</string>
 </resources>

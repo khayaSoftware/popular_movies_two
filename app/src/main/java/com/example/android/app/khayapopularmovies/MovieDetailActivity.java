@@ -28,7 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<String>> {
+public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapter.TrailerAdapterOnClickHandler, LoaderManager.LoaderCallbacks<ArrayList<String>> {
 
     private ImageView imageView;
     private TextView textViewDescription;
@@ -36,6 +36,8 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private TextView textViewTitle;
     private String imagePath;
     private RecyclerView mReviewList;
+    private RecyclerView mTrailerList;
+    private TrailerAdapter mTrailerAdapter;
     private Bundle extras;
     FloatingActionButton fab;
     static final String PARTIAL_IMAGE_LINK = "http://image.tmdb.org/t/p/w780/";
@@ -46,6 +48,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     private ReviewAdapter mReviewAdapter;
     private ArrayList<String> reviewList;
     private static final int LOADER_ID = 22;
+    private final String REVIEWS = "reviews";
+    private final String VIDEOS = "trailers";
+    Bundle bundle;
 
 
     @Override
@@ -127,8 +132,16 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         mReviewAdapter = new ReviewAdapter(this);
         mReviewList.setHasFixedSize(true);
         mReviewList.setAdapter(mReviewAdapter);
-        //String query = extras.getString(getString(R.string.bundle_id)) + "3593/reviews";
-        loadMovieData(extras.getString(getString(R.string.bundle_id)),"reviews");
+        loadMovieData(extras.getString(getString(R.string.bundle_id)), REVIEWS);
+
+        mTrailerList = (RecyclerView) findViewById(R.id.rv_trailers);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mTrailerList.setLayoutManager(layoutManager);
+        mTrailerAdapter = new TrailerAdapter(this, this);
+        mTrailerList.setHasFixedSize(true);
+        mTrailerList.setAdapter(mTrailerAdapter);
+        loadMovieData(extras.getString(getString(R.string.bundle_id)), VIDEOS);
+
 
     }
 
@@ -146,7 +159,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
     private void loadMovieData(String movieID, String sort) {
 
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString(getString(R.string.menu_item_key), sort);
         bundle.putString(getString(R.string.movie_id_key), movieID);
 
@@ -180,15 +193,28 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             @Override
             public ArrayList<String> loadInBackground() {
                 URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)), args.getString(getString(R.string.movie_id_key)));
-                try {
-                    jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
-                    Log.d(TAG, "Json data = "+ jsonData);
-                    ArrayList reviews = OpenMovieJsonUtils.getSimpleReviewStrings(MovieDetailActivity.this, jsonData);
-                    reviewList = reviews;
-                    return reviews;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
+                if(args.getString(getString(R.string.menu_item_key)).equals(REVIEWS)){
+                    try {
+                        jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                        Log.d(TAG, "Json data = "+ jsonData);
+                        ArrayList reviews = OpenMovieJsonUtils.getSimpleReviewStrings(MovieDetailActivity.this, jsonData);
+                        reviewList = reviews;
+                        return reviews;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }else{
+                    try {
+                        jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
+                        Log.d(TAG, "Json data = "+ jsonData);
+                        ArrayList reviews = OpenMovieJsonUtils.getSimpleTrailerStrings(MovieDetailActivity.this, jsonData);
+                        reviewList = reviews;
+                        return reviews;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 }
             }
 
@@ -201,8 +227,15 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     public void onLoadFinished(Loader<ArrayList<String>> loader, ArrayList<String> movies) {
         //mLoadingIndicatore.setVisibility(View.INVISIBLE);
         if (movies != null) {
-            showMovieDataView();
-            mReviewAdapter.setReviews(reviewList);
+            if(bundle.getString(getString(R.string.menu_item_key)).equals(REVIEWS)){
+                showMovieDataView();
+                mReviewAdapter.setReviews(reviewList);
+            }
+            else{
+                showMovieDataView();
+                mTrailerAdapter.setReviews(reviewList);
+            }
+
         } else {
             showErrorMessage();
         }
@@ -213,5 +246,8 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
     }
 
+    @Override
+    public void onClick(String trailer) {
 
+    }
 }
