@@ -190,6 +190,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         intentToStartAct.putExtras(extras);
         startActivity(intentToStartAct);
+
+        intentToStartAct.putExtra("Movie", movie);
     }
 
     @Override

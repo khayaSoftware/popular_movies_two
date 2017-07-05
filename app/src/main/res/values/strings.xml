@@ -28,4 +28,6 @@
     <string name="favourite_label">Favourites</string>
     <string name="new_line">\n</string>
     <string name="trailer_tv_lable">Trailer</string>
+    <string name="Review_section_title">Reviews</string>
+    <string name="Trailer_Label">Trailer</string>
 </resources>

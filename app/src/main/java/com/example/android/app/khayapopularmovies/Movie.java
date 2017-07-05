@@ -1,10 +1,12 @@
 package com.example.android.app.khayapopularmovies;
 
+import java.io.Serializable;
+
 /**
  * Created by noybs on 23/05/2017.
  */
 
-public class Movie {
+public class Movie implements Serializable {
 
     public Movie(String posterPath, String overview,
                  String releaseDate, String id,

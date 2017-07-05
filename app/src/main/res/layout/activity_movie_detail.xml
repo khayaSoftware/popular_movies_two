@@ -71,12 +71,19 @@
                 android:textColor="#fff"
                 android:textSize="23sp" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_trailers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEBC10"></android.support.v7.widget.RecyclerView>
+
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="3dp"
                 android:background="#EEBC10" />
 
             <TextView
+                android:id="@+id/reviews_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -84,15 +91,10 @@
                 android:gravity="start"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:text="Reviews"
+                android:text="@string/Review_section_title"
                 android:textColor="#fff"
                 android:textSize="30sp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_trailers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#EEBC10"></android.support.v7.widget.RecyclerView>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_reviews"
