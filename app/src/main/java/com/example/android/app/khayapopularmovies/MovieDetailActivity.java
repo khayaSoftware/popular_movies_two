@@ -2,6 +2,7 @@ package com.example.android.app.khayapopularmovies;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -93,18 +94,41 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         trailerLoader(extras.getString(getString(R.string.bundle_id)), REVIEWS);
     }
 
+    private boolean isFav(String id){
+        Uri uri = ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI;
+        uri = uri.buildUpon().appendPath(id).build();
+        Cursor favCursor = null;
+
+        try{
+
+            if(favCursor.getCount() > 0){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }finally {
+            if(favCursor != null)
+            favCursor.close();
+        }
+    }
+
+    private Cursor getCurrentMovie(Uri uri){
+        return getContentResolver().query(uri, null, null, null, null);
+    }
+
     public void setFab(){
         fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null)
 
-            if (extras.getInt(getString(R.string.bundle_is_fav)) == 0) {
+            if (isFav(extras.getString(getString(R.string.bundle_id)))) {
                 fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
             }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (extras.getInt(getString(R.string.bundle_is_fav)) == 1) {
+                if (isFav(extras.getString(getString(R.string.bundle_id)))) {
 
                     Snackbar.make(view, extras.getString(getString(R.string.bundle_title)) + " " + getString(R.string.delete_message), Snackbar.LENGTH_LONG)
                             .setAction(getString(R.string.action_type), null).show();
@@ -112,7 +136,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     Uri uri = ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI;
                     uri = uri.buildUpon().appendPath(extras.getString(getString(R.string.bundle_id))).build();
                     getContentResolver().delete(uri, null, null);
-                } else if (extras.getInt(getString(R.string.bundle_is_fav)) == 0) {
+                } else {
 
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION, extras.getString(getString(R.string.bundle_description)));
@@ -122,7 +146,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE, extras.getString(getString(R.string.bundle_title)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL, extras.getString(getString(R.string.bundle_url)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL, extras.getString(getString(R.string.bundle_poster_url)));
-                    contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_IS_FAVORITE, 1);
+                    contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_IS_FAVORITE, extras.getString(getString(R.string.bundle_id)));
 
                     Uri uri = getContentResolver().insert(ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI, contentValues);
 
