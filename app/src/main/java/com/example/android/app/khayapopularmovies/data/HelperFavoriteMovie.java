@@ -25,14 +25,14 @@ public class HelperFavoriteMovie extends SQLiteOpenHelper {
 
         final String SQL_CREATE_FAVORITE_TABLE = "CREATE TABLE " + ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME + " (" +
                 ContractFavoriteMovie.FavoriteMovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ContractFavoriteMovie.FavoriteMovieEntry.MOVIE_ID + " INTEGER NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_AVERAGE + " TEXT NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_COUNT + " TEXT NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL + " TEXT NOT NULL," +
                 ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL + " TEXT NOT NULL," +
-                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL," +
-                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_IS_FAVORITE + " INT NOT NULL" +
+                ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL" +
                 "); ";
 
         sqLiteDatabase.execSQL(SQL_CREATE_FAVORITE_TABLE);

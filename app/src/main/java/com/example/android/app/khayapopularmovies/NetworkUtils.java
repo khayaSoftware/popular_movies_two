@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class NetworkUtils {
     private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     private static final String TAG = NetworkUtils.class.getSimpleName();
-    //COMPLETED SUGGESTION Follow the standard Java Naming Conventions i.e. BASE_URL in this instance
+    private final static String DELIMETER = "\\A";
 
     private static final String API_QUERY = "api_key";
 
@@ -35,7 +35,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,"url = " + url.toString());
         return url;
     }
 
@@ -52,7 +51,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,"url = " + url.toString());
         return url;
     }
 
@@ -62,7 +60,7 @@ public class NetworkUtils {
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
+            scanner.useDelimiter(DELIMETER);
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {

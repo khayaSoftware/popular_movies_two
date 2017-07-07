@@ -22,6 +22,10 @@ public class FavoriteContentProvider extends ContentProvider {
     final static String TAG = FavoriteContentProvider.class.getSimpleName();
     public static final int FAVORITE_MOVIE_WITH_ID = 101;
     public static final int FAVORITES = 100;
+    public final String MOV_ID = "mov_ID=?";
+    private final String UNKNOWN_URI = "Unknown uri: ";
+    private final String FAILED_TO_INSERT = "Failed to insert row into ";
+    private final String NOT_IMPLEMENTED = "Not yet implemented";
 
     private static final UriMatcher sUriMatcher = builUriMatcher();
 
@@ -54,11 +58,11 @@ public class FavoriteContentProvider extends ContentProvider {
                 if(id > 0){
                     returnUri = ContentUris.withAppendedId(ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI, id);
                 }else{
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                    throw new android.database.SQLException(FAILED_TO_INSERT + uri);
                 }
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown uri:"+uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
@@ -89,14 +93,14 @@ public class FavoriteContentProvider extends ContentProvider {
                 String[] selctions = new String[]{id};
                 returnCursor = db.query(TABLE_NAME,
                         projection,
-                        selection,
+                        MOV_ID,
                         selctions,
                         null,
                         null,
                         sortOrder);
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         returnCursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -114,12 +118,12 @@ public class FavoriteContentProvider extends ContentProvider {
 
         switch (match){
             case FAVORITE_MOVIE_WITH_ID:
-                String id = uri.getPathSegments().get(1);
+                String id = uri.getLastPathSegment();
 
-                tasksDelted = db.delete(TABLE_NAME, "_id=?", new String[]{id});
+                tasksDelted = db.delete(TABLE_NAME, MOV_ID, new String[]{id});
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown uri " + uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         if(tasksDelted != 0){
@@ -146,6 +150,6 @@ public class FavoriteContentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException(NOT_IMPLEMENTED);
     }
 }

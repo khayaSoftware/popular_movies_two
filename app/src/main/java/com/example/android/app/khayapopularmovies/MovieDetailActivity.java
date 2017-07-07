@@ -51,6 +51,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     boolean isFav = false;
     Movie movie;
     TextView reviewTitle;
+    private final String YOUTUBE_LINK = "http://www.youtube.com/watch?v=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,19 +93,26 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mReviewList.setHasFixedSize(true);
         mReviewList.setAdapter(mReviewAdapter);
         trailerLoader(extras.getString(getString(R.string.bundle_id)), REVIEWS);
+
     }
 
     private boolean isFav(String id){
+
         Uri uri = ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI;
+
         uri = uri.buildUpon().appendPath(id).build();
-        Cursor favCursor = null;
-
+        Cursor favCursor = getCurrentMovie(uri);
+        Log.d(TAG, favCursor.getCount()+"");
         try{
+            if(favCursor != null){
+                if(favCursor.getCount() > 0){
 
-            if(favCursor.getCount() > 0){
-                return true;
-            }
-            else {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else {
                 return false;
             }
         }finally {
@@ -121,7 +129,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null)
 
-            if (isFav(extras.getString(getString(R.string.bundle_id)))) {
+            if (!isFav(extras.getString(getString(R.string.bundle_id)))) {
                 fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
             }
 
@@ -139,6 +147,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 } else {
 
                     ContentValues contentValues = new ContentValues();
+                    contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.MOVIE_ID, Integer.parseInt(extras.getString(getString(R.string.bundle_id))));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION, extras.getString(getString(R.string.bundle_description)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE, extras.getString(getString(R.string.bundle_release_date)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_AVERAGE, extras.getString(getString(R.string.bundle_vote_average)));
@@ -146,7 +155,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE, extras.getString(getString(R.string.bundle_title)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL, extras.getString(getString(R.string.bundle_url)));
                     contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL, extras.getString(getString(R.string.bundle_poster_url)));
-                    contentValues.put(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_IS_FAVORITE, extras.getString(getString(R.string.bundle_id)));
+
 
                     Uri uri = getContentResolver().insert(ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI, contentValues);
 
@@ -239,7 +248,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)), args.getString(getString(R.string.movie_id_key)));
                     try {
                         jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
-                        Log.d(TAG, "Json data = "+ jsonData);
                         ArrayList reviews = OpenMovieJsonUtils.getSimpleReviewStrings(MovieDetailActivity.this, jsonData);
                         reviewList = reviews;
                         return reviews;
@@ -269,7 +277,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     URL movieRequest = NetworkUtils.buildUrl(args.getString(getString(R.string.menu_item_key)), args.getString(getString(R.string.movie_id_key)));
                     try {
                         jsonData = NetworkUtils.getResponseFromHttpUrl(movieRequest);
-                        Log.d(TAG, "Json data = "+ jsonData);
                         ArrayList trailers = OpenMovieJsonUtils.getSimpleTrailerStrings(MovieDetailActivity.this, jsonData);
                         trailerList = trailers;
                         return trailers;
@@ -310,6 +317,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     @Override
     public void onClick(String trailer) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer)));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse( YOUTUBE_LINK + trailer)));
     }
 }

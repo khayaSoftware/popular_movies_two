@@ -73,8 +73,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Log.d(TAG, "Review = " + ((Movie)mMovies.get(position)).title);
-
         String imagePath = PARTIAL_IMAGE_LINK + mMovies.get(position).posterPath;
 
         try {
