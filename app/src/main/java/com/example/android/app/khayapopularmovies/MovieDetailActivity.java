@@ -144,6 +144,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                     Uri uri = ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI;
                     uri = uri.buildUpon().appendPath(extras.getString(getString(R.string.bundle_id))).build();
                     getContentResolver().delete(uri, null, null);
+                    finish();
                 } else {
 
                     ContentValues contentValues = new ContentValues();
