@@ -1,33 +1,36 @@
 <resources>
-    <string name="app_name">KLIX</string>
+    <string name="app_name" translatable="false">KLIX</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
-    <string name="error_msg">Network Error. Please ensure the API key is set and you have an internet connection.</string>
-    <string name="no_fav_msg">No Favourites found.</string>
-    <string name="rating">  | RATING:  </string>
-    <string name="bundle_url">EXTRA_URL</string>
-    <string name="bundle_poster_url">EXTRA_POSTER_URL</string>
-    <string name="bundle_description">EXTRA_DESCRIPTION</string>
-    <string name="bundle_title">EXTRA_TITLE</string>
-    <string name="bundle_release_date">EXTRA_RELEASE_DATE</string>
-    <string name="bundle_vote_average">EXTRA_VOTE_AVERAGE</string>
-    <string name="bundle_vote_count">EXTRA_VOTE_COUNT</string>
-    <string name="bundle_id">EXTRA_ID</string>
-    <string name="bundle_is_fav">EXTRA_IS_FAV</string>
-    <string name="label_popular_movies">Popular Movies</string>
-    <string name="label_top_rated_movies">Top Rated Movies</string>
-    <string name="top_rate">/10</string>
-    <string name="top_rated">top_rated</string>
-    <string name="popular">popular</string>
-    <string name="piccassa">http://image.tmdb.org/t/p/w185/</string>
-    <string name="menu_item_key">MenuItemKey</string>
-    <string name="movie_id_key">MovieIdKey</string>
-    <string name="content_description">Movie Poster</string>
-    <string name="save_message">is saved as a favourite.</string>
-    <string name="delete_message">has been deleted from favourites.</string>
-    <string name="action_type">Action</string>
-    <string name="favourite_label">Favourites</string>
-    <string name="new_line">\n</string>
-    <string name="trailer_tv_lable">Trailer</string>
-    <string name="Review_section_title">Reviews</string>
-    <string name="Trailer_Label">Trailer</string>
+    <string name="error_msg" translatable="true">Network Error. Please ensure the API key is set and you have an internet connection.</string>
+    <string name="error_fav_msg" translatable="true">Darabase Error. No favourite movies found.</string>
+    <string name="no_fav_msg" translatable="true">No Favourites found.</string>
+    <string name="rating" translatable="true">  | RATING:  </string>
+    <string name="bundle_url" translatable="false">EXTRA_URL</string>
+    <string name="bundle_poster_url" translatable="false">EXTRA_POSTER_URL</string>
+    <string name="bundle_description" translatable="false">EXTRA_DESCRIPTION</string>
+    <string name="bundle_title" translatable="false">EXTRA_TITLE</string>
+    <string name="bundle_release_date" translatable="false">EXTRA_RELEASE_DATE</string>
+    <string name="bundle_vote_average" translatable="false">EXTRA_VOTE_AVERAGE</string>
+    <string name="bundle_vote_count" translatable="false">EXTRA_VOTE_COUNT</string>
+    <string name="bundle_id" translatable="false">EXTRA_ID</string>
+    <string name="bundle_is_fav" translatable="false">EXTRA_IS_FAV</string>
+    <string name="label_popular_movies" translatable="true">Popular Movies</string>
+    <string name="label_top_rated_movies" translatable="true">Top Rated Movies</string>
+    <string name="top_rate" translatable="true">/10</string>
+    <string name="top_rated" translatable="false">top_rated</string>
+    <string name="popular" translatable="false">popular</string>
+    <string name="favourites" translatable="false">Favourites</string>
+    <string name="piccassa" translatable="false">http://image.tmdb.org/t/p/w185/</string>
+    <string name="menu_item_key" translatable="false">MenuItemKey</string>
+    <string name="movie_id_key" translatable="false">MovieIdKey</string>
+    <string name="content_description" translatable="false">Movie Poster</string>
+    <string name="save_message" translatable="true">is saved as a favourite.</string>
+    <string name="delete_message" translatable="true">has been deleted from favourites.</string>
+    <string name="action_type" translatable="false">Action</string>
+    <string name="favourite_label" translatable="true">Favourites</string>
+    <string name="new_line" translatable="false">\n</string>
+    <string name="trailer_tv_lable" translatable="true"> | TRAILER</string>
+    <string name="Review_section_title" translatable="true">Reviews</string>
+    <string name="Trailer_Label" translatable="true">Trailer</string>
+    <string name="empty" translatable="true"></string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -35,15 +36,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mAdapter;
     private RecyclerView mMovieList;
     ArrayList movieList;
-    private final String TOP_RATED = "top_rated";
-    private final String POPULAR = "popular";
-    private final String FAVOURITE = "Favourites";
+    private final static String TOP_RATED = "top_rated";
+    private final static String POPULAR = "popular";
+    private final static String FAVOURITE = "Favourites";
     private ProgressBar mLoadingIndicatore;
     private TextView mErrorMessageDisplay;
     private RecyclerView mRecyclerView;
     private static final int LOADER_ID = 22;
-    private Cursor mCursor;
-    private final static String TAG = MainActivity.class.getSimpleName();
+    private static String optionSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +72,45 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mMovieList.setAdapter(mAdapter);
 
-        loadMovieData();
+        String currentOption = getString(R.string.empty);
+
+        if(savedInstanceState!=null){
+            if(savedInstanceState.containsKey(getString(R.string.menu_item_key))){
+                currentOption = savedInstanceState.getString(getString(R.string.menu_item_key));
+            }
+        }else {
+            currentOption = POPULAR;
+            optionSelected = POPULAR;
+        }
+
+        loadMovieData(currentOption);
 
     }
 
-
-    private void loadMovieData() {
-        showMovieDataView();
-
-        loadMovieData(POPULAR);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String currentState = getString(R.string.empty);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            if(bundle.containsKey(getString(R.string.menu_item_key))){
+                currentState = bundle.getString(getString(R.string.menu_item_key));
+                loadMovieData(currentState);
+            }
+        }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getIntent().putExtra(getString(R.string.menu_item_key), optionSelected);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(getString(R.string.menu_item_key), optionSelected);
+    }
 
     private void showMovieDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
@@ -93,11 +121,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void showErrorMessage() {
         mMovieList.setVisibility(View.INVISIBLE);
 
+        mErrorMessageDisplay.setText(getString(R.string.error_msg));
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    private void loadMovieData(String selectedMenuItem) {
+    private void showDataErrorMessage(){
+        mMovieList.setVisibility(View.INVISIBLE);
 
+        mErrorMessageDisplay.setText(getString(R.string.error_fav_msg));
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+
+    }
+
+    private void loadMovieData(String selectedMenuItem) {
+        showMovieDataView();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.menu_item_key), selectedMenuItem);
 
@@ -205,18 +242,21 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         int id = item.getItemId();
         switch (id) {
             case R.id.popular:
+                optionSelected = POPULAR;
                 mAdapter.setMovieData(null);
                 loadMovieData(POPULAR);
                 Toast.makeText(this, getString(R.string.label_popular_movies), Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.top_rated:
+                optionSelected = TOP_RATED;
                 mAdapter.setMovieData(null);
                 loadMovieData(TOP_RATED);
                 Toast.makeText(this, getString(R.string.label_top_rated_movies), Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.favourites:
+                optionSelected = FAVOURITE;
                 mAdapter.setMovieData(null);
                 loadMovieData(FAVOURITE);
                 Toast.makeText(this, getString(R.string.favourite_label), Toast.LENGTH_LONG).show();

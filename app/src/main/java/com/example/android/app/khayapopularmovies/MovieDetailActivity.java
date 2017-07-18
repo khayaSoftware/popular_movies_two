@@ -232,7 +232,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     @Override
     public Loader<ArrayList<String>> onCreateLoader(int id, final Bundle args) {
-        Log.d(TAG, "id = " + id);
         if(id == 21){
             return new AsyncTaskLoader<ArrayList<String>>(this) {
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sizehun">100dp</dimen>
+    <dimen name="font20">20sp</dimen>
+    <dimen name="margin0">0dp</dimen>
+    <dimen name="neg20">-20dp</dimen>
+    <dimen name="pushdown120">150dp</dimen>
+    <dimen name="padding10">10dp</dimen>
+    <dimen name="font30">30sp</dimen>
+    <dimen name="font14">14sp</dimen>
+    <dimen name="borderheight">0.5dp</dimen>
+    <dimen name="font23">23sp</dimen>
+    <dimen name="margin16">16dp</dimen>
+    <dimen name="font16">16sp</dimen>
+</resources>
