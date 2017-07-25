@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private RecyclerView mRecyclerView;
     private static final int LOADER_ID = 22;
     private static String optionSelected;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieList = (RecyclerView) findViewById(R.id.rv_movies);
         GridLayoutManager gridLayout;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridLayout = new GridLayoutManager(this, 3);
+            gridLayout = new GridLayoutManager(this, 4);
         } else {
-            gridLayout = new GridLayoutManager(this, 2);
+            gridLayout = new GridLayoutManager(this, 3);
         }
 
         mMovieList.setLayoutManager(gridLayout);
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
         //TODO AWESOME You're saving the sort-criteria.
-        //TODO REQUIREMENT The Core App Quality Guidelines require "Maintains list items positions on device rotation" , however the view returns to the top upon rotation.
-        //TODO REQUIREMENT The sort criteria is not maintained when returning from MovieDetailsActivity
+        //COMPLETED REQUIREMENT The Core App Quality Guidelines require "Maintains list items positions on device rotation" , however the view returns to the top upon rotation.
+        //COMPLETED REQUIREMENT The sort criteria is not maintained when returning from MovieDetailsActivity
     }
 
     @Override
@@ -286,7 +287,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private ArrayList<Movie> loadFavouriteMovies(){
         Cursor cursor = returnFavourites();
-        cursor.moveToFirst();
+        Log.d(TAG, "HERE");
+        //cursor.moveToFirst();
 
         ArrayList<Movie> favoriteMovies = new ArrayList<Movie>();
         try{
@@ -294,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 String movieName = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_TITLE));
                 String movieDescription = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION));
                 String movieRelease = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE));
-                String movieID = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.MOVIE_ID)).toString();
+                int movieID = cursor.getInt(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.MOVIE_ID));
                 //TODO SUGGESTION No need to invoke.toString() when you're calling getString()
                 String movieBackdrop = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL));
                 String moviePoster = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL));
@@ -305,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                         moviePoster,
                         movieDescription,
                         movieRelease,
-                        movieID,
+                        Integer.toString(movieID),
                         movieName,
                         movieBackdrop,
                         movieVoteCount,

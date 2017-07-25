@@ -27,13 +27,14 @@ public class FavoriteContentProvider extends ContentProvider {
     private final String UNKNOWN_URI = "Unknown uri: ";
     private final String FAILED_TO_INSERT = "Failed to insert row into ";
     private final String NOT_IMPLEMENTED = "Not yet implemented";
+    private static final String HASH_WILDCARD = "/#";
 
     private static final UriMatcher sUriMatcher = builUriMatcher();
 
     public static UriMatcher builUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES + "/#", FAVORITE_MOVIE_WITH_ID);
-        //TODO REQUIREMENT String literals should be constants or in strings.xml
+        uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES + HASH_WILDCARD, FAVORITE_MOVIE_WITH_ID);
+        //COMPLETED REQUIREMENT String literals should be constants or in strings.xml
         uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES, FAVORITES);
         return uriMatcher;
     }
