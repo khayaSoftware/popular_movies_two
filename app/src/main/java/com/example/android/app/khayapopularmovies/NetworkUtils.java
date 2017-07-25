@@ -13,6 +13,7 @@ import java.util.Scanner;
 /**
  * Created by User on 5/23/2017.
  */
+//TODO SUGGESTION Between noybs, user and Khaya this is a real team effort - unfortunately it is for an individual exam :^)
 
 public class NetworkUtils {
     private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";

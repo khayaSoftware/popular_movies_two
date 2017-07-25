@@ -119,6 +119,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             if(favCursor != null)
             favCursor.close();
         }
+        //TODO SUGGESTION The code above is convoluted, you can simplify the try-finally as follows: return null != favCursor && favCursor.getCount() >0;
+
     }
 
     private Cursor getCurrentMovie(Uri uri){
@@ -127,6 +129,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     public void setFab(){
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        //TODO AWESOME Great use of the FAB to add/remove Favourites
         if (fab != null)
 
             if (!isFav(extras.getString(getString(R.string.bundle_id)))) {
@@ -140,10 +143,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
                     Snackbar.make(view, extras.getString(getString(R.string.bundle_title)) + " " + getString(R.string.delete_message), Snackbar.LENGTH_LONG)
                             .setAction(getString(R.string.action_type), null).show();
+                    //TODO AWESOME Nice to see you using the Snackbar, although it's not necessary since the FAB changes to indicate de/selection.
                     fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     Uri uri = ContractFavoriteMovie.FavoriteMovieEntry.CONTENT_URI;
                     uri = uri.buildUpon().appendPath(extras.getString(getString(R.string.bundle_id))).build();
                     getContentResolver().delete(uri, null, null);
+                    //TODO AWESOME The ContentProvider is working out pretty handy!
                     finish();
                 } else {
 
@@ -172,6 +177,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             }
         });
     }
+    //TODO REQUIREMENT The Favourite functionality behaves inconsistently. Adding a Fav soemtimes doesn't work, removing a Fav sometimes removes multiple Favs
 
     public void initFields(){
         reviewTitle = (TextView) findViewById(R.id.reviews_count);
@@ -232,6 +238,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     @Override
     public Loader<ArrayList<String>> onCreateLoader(int id, final Bundle args) {
+        //TODO AWESOME Nice use of Loaders to do network tasks, and parsing in the background
         if(id == 21){
             return new AsyncTaskLoader<ArrayList<String>>(this) {
 

@@ -73,11 +73,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieList.setAdapter(mAdapter);
 
         String currentOption = getString(R.string.empty);
+        //TODO SUGGESTION You might aswell initialise currentOption to POPULAR, and remove the else{} from the if statement below
+        //TODO SUGGESTION sortCriteria or something like that is more meaningful & unambiguous than "currentOption"
 
         if(savedInstanceState!=null){
             if(savedInstanceState.containsKey(getString(R.string.menu_item_key))){
                 currentOption = savedInstanceState.getString(getString(R.string.menu_item_key));
             }
+            //TODO SUGGESTION You can rewrite the nested if statements as if(savedInstanceState!=null && savedInstanceState.containsKey(getString(R.string.menu_item_key))){...} else{...}
         }else {
             currentOption = POPULAR;
             optionSelected = POPULAR;
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     protected void onResume() {
         super.onResume();
         String currentState = getString(R.string.empty);
+        //TODO SUGGESTION sortCriteria or something like that is more meaningful & unambiguous than "currentState"
+        //TODO SUGGESTION Try to be consistent with naming variables "currentState" is used here, but "currentOption" is used in onCreate()
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             if(bundle.containsKey(getString(R.string.menu_item_key))){
@@ -98,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 loadMovieData(currentState);
             }
         }
+        //TODO AWESOME You're saving the sort-criteria.
+        //TODO REQUIREMENT The Core App Quality Guidelines require "Maintains list items positions on device rotation" , however the view returns to the top upon rotation.
+        //TODO REQUIREMENT The sort criteria is not maintained when returning from MovieDetailsActivity
     }
 
     @Override
@@ -151,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public Loader<ArrayList<Movie>> onCreateLoader(int id, final Bundle args) {
-
+    //TODO AWESOME Nice use of Loaders to do network tasks, and JSON parsing in the background
         return new AsyncTaskLoader<ArrayList<Movie>>(this) {
 
             @Override
@@ -287,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 String movieDescription = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_DESCRIPTION));
                 String movieRelease = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_RELEASE_DATE));
                 String movieID = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.MOVIE_ID)).toString();
+                //TODO SUGGESTION No need to invoke.toString() when you're calling getString()
                 String movieBackdrop = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_BACKDROP_URL));
                 String moviePoster = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_POSTER_URL));
                 String movieVoteAverage = cursor.getString(cursor.getColumnIndex(ContractFavoriteMovie.FavoriteMovieEntry.COLUMN_VOTE_AVERAGE));

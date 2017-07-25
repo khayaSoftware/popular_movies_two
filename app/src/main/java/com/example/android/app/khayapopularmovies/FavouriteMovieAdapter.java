@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by noybs on 02/07/2017.
  */
+//TODO SUGGESTION This noybs chap has written large portions of your submission - or so it seems :^)
 
 public class FavouriteMovieAdapter extends RecyclerView.Adapter<FavouriteMovieAdapter.FavouriteViewHolder> {
 
@@ -71,7 +72,7 @@ public class FavouriteMovieAdapter extends RecyclerView.Adapter<FavouriteMovieAd
         if(!mCursor.moveToPosition(position)){
             return;
         }
-
+        //TODO SUGGESTION Simplify this code, are the 'if' and 'return' statements necessary?
 
     }
 

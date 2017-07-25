@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by noybs on 03/07/2017.
  */
+//TODO SUGGESTION This noybs chap has written large portions of your submission - or so it seems :^)
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
