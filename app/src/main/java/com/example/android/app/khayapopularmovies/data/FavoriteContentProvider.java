@@ -17,6 +17,7 @@ import static com.example.android.app.khayapopularmovies.data.ContractFavoriteMo
 /**
  * Created by noybs on 29/06/2017.
  */
+//TODO SUGGESTION This noybs chap has written large portions of your submission - or so it seems :^)
 
 public class FavoriteContentProvider extends ContentProvider {
     final static String TAG = FavoriteContentProvider.class.getSimpleName();
@@ -32,6 +33,7 @@ public class FavoriteContentProvider extends ContentProvider {
     public static UriMatcher builUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES + "/#", FAVORITE_MOVIE_WITH_ID);
+        //TODO REQUIREMENT String literals should be constants or in strings.xml
         uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES, FAVORITES);
         return uriMatcher;
     }
@@ -128,6 +130,7 @@ public class FavoriteContentProvider extends ContentProvider {
 
         if(tasksDelted != 0){
             getContext().getContentResolver().notifyChange(uri, null);;
+            //TODO SUGGESTION Interesting use of the empty statement :^)
         }
 
         return tasksDelted;

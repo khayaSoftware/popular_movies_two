@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by noybs on 28/06/2017.
  */
-
+//TODO SUGGESTION This noybs chap has written large portions of your submission - or so it seems :^)
 
 public class HelperFavoriteMovie extends SQLiteOpenHelper {
 
@@ -44,6 +44,7 @@ public class HelperFavoriteMovie extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
+    //TODO REQUIREMENT String literals should be constants or in strings.xml
 
     public static void deleteDatabase(Context mContext) {
         mContext.deleteDatabase(DATABASE_NAME);

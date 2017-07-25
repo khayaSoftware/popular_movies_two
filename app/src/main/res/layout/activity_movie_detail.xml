@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop" />
-
+            <!-- TODO REQUIREMENT: Accessibility, include a contentDescription for vision impaired users -->
 
         </LinearLayout>
 
@@ -58,6 +58,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorGold"
                 android:textSize="@dimen/font14" />
+            <!-- TODO REQUIREMENT: Internationalization, support LTR languages use e.g. android:paddingStart/End instead of or in addition to android:paddingLeft/Right etc. -->
 
             <View
                 android:layout_width="match_parent"
