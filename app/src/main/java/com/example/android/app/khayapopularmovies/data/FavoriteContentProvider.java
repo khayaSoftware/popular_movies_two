@@ -35,6 +35,7 @@ public class FavoriteContentProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES + HASH_WILDCARD, FAVORITE_MOVIE_WITH_ID);
         //COMPLETED REQUIREMENT String literals should be constants or in strings.xml
+        //TODO-2 EXCELLENT
         uriMatcher.addURI(ContractFavoriteMovie.AUTHORITY, ContractFavoriteMovie.PATH_FAVORITES, FAVORITES);
         return uriMatcher;
     }

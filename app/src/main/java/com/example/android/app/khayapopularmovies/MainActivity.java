@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         //TODO AWESOME You're saving the sort-criteria.
         //COMPLETED REQUIREMENT The Core App Quality Guidelines require "Maintains list items positions on device rotation" , however the view returns to the top upon rotation.
         //COMPLETED REQUIREMENT The sort criteria is not maintained when returning from MovieDetailsActivity
+        //TODO-2 AWESOME You're aving state across device configurations and across Activities
     }
 
     @Override

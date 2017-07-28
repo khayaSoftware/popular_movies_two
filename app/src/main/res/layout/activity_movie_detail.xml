@@ -24,6 +24,7 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/content_desc_moviedet"/>
             <!-- COMPLETED REQUIREMENT: Accessibility, include a contentDescription for vision impaired users -->
+            <!-- TODO-2 AWESOME Inclusive app design is a win for everybody -->
 
         </LinearLayout>
 
