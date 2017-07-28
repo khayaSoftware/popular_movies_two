@@ -18,6 +18,7 @@
         android:textSize="@dimen/font16"
         android:background="@color/darkgray"
         android:textColor="@color/colorGold"
+        android:drawableStart="@drawable/ic_play_arrow_black_24dp"
         android:drawableLeft="@drawable/ic_play_arrow_black_24dp"
         android:drawableTint="@color/colorPrimary"/>
 

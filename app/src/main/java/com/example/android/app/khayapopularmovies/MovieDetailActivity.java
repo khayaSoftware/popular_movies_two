@@ -177,7 +177,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             }
         });
     }
-    //TODO REQUIREMENT The Favourite functionality behaves inconsistently. Adding a Fav soemtimes doesn't work, removing a Fav sometimes removes multiple Favs
+    //COMPLETED REQUIREMENT The Favourite functionality behaves inconsistently. Adding a Fav soemtimes doesn't work, removing a Fav sometimes removes multiple Favs
 
     public void initFields(){
         reviewTitle = (TextView) findViewById(R.id.reviews_count);

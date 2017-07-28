@@ -33,4 +33,5 @@
     <string name="Review_section_title" translatable="true">Reviews</string>
     <string name="Trailer_Label" translatable="true">Trailer</string>
     <string name="empty" translatable="true"></string>
+    <string name="content_desc_moviedet" translatable="true">An image with the movie poster</string>
 </resources>

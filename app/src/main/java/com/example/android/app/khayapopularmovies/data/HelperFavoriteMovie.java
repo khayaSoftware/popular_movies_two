@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class HelperFavoriteMovie extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "favorites.db";
-
+    private static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -41,13 +41,15 @@ public class HelperFavoriteMovie extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL(DROP_TABLE + ContractFavoriteMovie.FavoriteMovieEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
-    //TODO REQUIREMENT String literals should be constants or in strings.xml
+    //COMPLETED REQUIREMENT String literals should be constants or in strings.xml
 
     public static void deleteDatabase(Context mContext) {
         mContext.deleteDatabase(DATABASE_NAME);
     }
+
+
 }
 
